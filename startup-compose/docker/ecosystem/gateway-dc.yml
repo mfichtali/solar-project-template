@@ -1,0 +1,31 @@
+services:
+
+
+  # Begin gateway-service section 
+  gateway-service:
+    image: gateway-service:$GTW_VERSION
+    build:
+      context: ../../../api-gateway
+      args:
+        workdir_env: $ROOT_CONTEXT_APP
+        gtw_version: $GTW_VERSION
+    container_name: $GTW_CONTAINER_NAME
+    profiles: ["dev"]
+    env_file: 
+      - ../../environment/$SPRING_PROFILES_ACTIVE.env
+    volumes:
+       - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    ports:
+      - $GTW_EXPOSURE_PORT:$GTW_SOURCE_PORT
+  # End gateway-service section
+
+
+networks:
+  default:
+      name: netix-red
+      external: true
+
+
+#volumes:
+#  logs-volume:
+#    external: true

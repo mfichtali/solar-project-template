@@ -1,0 +1,25 @@
+#===============================================================================
+
+application:
+  name-key: audit
+  service-id: ${application.name-key}-service
+  path-key: api
+  version: v#project.version#
+  mvnVersion: v#project.version#
+  java.version: #java.build.version#
+  endpoint-api-key: ${application.path-key}/${application.version}
+  verbose.enabled: false
+
+
+#===============================================================================
+
+spring:
+  jpa.open-in-view: false
+  banner:
+    location: classpath:/boot/banner.txt
+    
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVICE_NAME:localhost}:${CONFIG_PORT:9020}/${CONFIG_CONTEXT_PATH:cloud-config-server}
+      name: audit-service
+      label: ${DEFAULT_BRANCH:develop} # wich branch in git remote used to load config, use env variable foo

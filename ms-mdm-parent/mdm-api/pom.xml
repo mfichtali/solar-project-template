@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.solar.system.mdm</groupId>
+		<artifactId>ms-mdm-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>mdm-api</artifactId>
+	<name>MDM Api</name>
+	<description>Master Data Managment Api</description>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Cloud starter -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+
+		<!-- depend service-impl -->
+		<dependency>
+			<groupId>org.solar.system.mdm</groupId>
+			<artifactId>mdm-service-impl</artifactId>
+		</dependency>
+
+		<!-- Springdoc-Openapi-ui -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>

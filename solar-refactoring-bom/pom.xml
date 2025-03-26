@@ -1,0 +1,353 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.solar.system.bom</groupId>
+	<artifactId>solar-refactoring-bom</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>Solar Refactoring BOM</name>
+
+	<modules>
+		<module>bom-spring-boot-2x-11jv</module>
+		<module>bom-spring-boot-3x-21jv</module>
+	</modules>
+
+<!--	<parent>-->
+<!--		<groupId>org.springframework.boot</groupId>-->
+<!--		<artifactId>spring-boot-starter-parent</artifactId>-->
+<!--		<version>2.6.14</version>-->
+<!--		<relativePath /> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+<!--	</parent>-->
+
+	<properties>
+		<springdoc.openapi.version>1.7.0</springdoc.openapi.version>
+		<lombok.version>1.18.20</lombok.version>
+		<mapstruct.version>1.5.2.Final</mapstruct.version>
+		<commons.lang3.version>3.12.0</commons.lang3.version>
+		<commons.collections4.version>4.4</commons.collections4.version>
+<!--		<logstash.version>7.2</logstash.version>-->
+		<jwt.version>0.11.2</jwt.version>
+		<hikaricp.version>4.0.3</hikaricp.version>
+		<caffeine.version>3.1.4</caffeine.version>
+<!--		<prometheus.registry.version>1.10.7</prometheus.registry.version>-->
+		<hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
+		<!-- Solar Central Common Utils Class -->
+		<central.common.version>1.0.0</central.common.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencyManagement>
+
+		<dependencies>
+
+			<!-- spring-cloud-dependencies -->
+<!--			<dependency>-->
+<!--				<groupId>org.springframework.cloud</groupId>-->
+<!--				<artifactId>spring-cloud-dependencies</artifactId>-->
+<!--				<version>${spring-cloud.version}</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
+
+			<!-- depend central common -->
+			<dependency>
+				<groupId>org.solar.system.common</groupId>
+				<artifactId>central-common</artifactId>
+				<version>${central.common.version}</version>
+			</dependency>
+
+			<!-- Springdoc-Openapi-ui -->
+			<dependency>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-ui</artifactId>
+				<version>${springdoc.openapi.version}</version>
+			</dependency>
+
+			<!-- HikariCP -->
+			<dependency>
+				<groupId>com.zaxxer</groupId>
+				<artifactId>HikariCP</artifactId>
+				<version>${hikaricp.version}</version>
+			</dependency>
+
+			<!-- Hibernate validator -->
+			<dependency>
+				<groupId>org.hibernate.validator</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate-validator.version}</version>
+			</dependency>
+
+			<!-- jjwt-api -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-api</artifactId>
+				<version>${jwt.version}</version>
+			</dependency>
+
+			<!-- jjwt-impl -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-impl</artifactId>
+				<version>${jwt.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<!-- jjwt-jackson -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-jackson</artifactId>
+				<version>${jwt.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+<!--			&lt;!&ndash; Lombok &ndash;&gt;-->
+<!--			<dependency>-->
+<!--				<groupId>org.projectlombok</groupId>-->
+<!--				<artifactId>lombok</artifactId>-->
+<!--				<version>${lombok.version}</version>-->
+<!--				<scope>provided</scope>-->
+<!--			</dependency>-->
+
+			<!-- Mapstruct -->
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${mapstruct.version}</version>
+			</dependency>
+
+			<!-- mapstruct-processor -->
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct-processor</artifactId>
+				<version>${mapstruct.version}</version>
+			</dependency>
+
+			<!-- commons-lang3 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons.lang3.version}</version>
+			</dependency>
+
+			<!-- commons-collections4 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons.collections4.version}</version>
+			</dependency>
+
+<!--			&lt;!&ndash; logstash-logback-encoder &ndash;&gt;-->
+<!--			<dependency>-->
+<!--				<groupId>net.logstash.logback</groupId>-->
+<!--				<artifactId>logstash-logback-encoder</artifactId>-->
+<!--				<version>${logstash.version}</version>-->
+<!--			</dependency>-->
+
+			<!-- Cache Caffeine -->
+			<dependency>
+				<groupId>com.github.ben-manes.caffeine</groupId>
+				<artifactId>caffeine</artifactId>
+				<version>${caffeine.version}</version>
+			</dependency>
+
+<!--			&lt;!&ndash; PROMETHEUS &ndash;&gt;-->
+<!--			<dependency>-->
+<!--				<groupId>io.micrometer</groupId>-->
+<!--				<artifactId>micrometer-registry-prometheus</artifactId>-->
+<!--				<version>${prometheus.registry.version}</version>-->
+<!--				<scope>runtime</scope>-->
+<!--			</dependency>-->
+
+			<!-- spring boot admin client -->
+<!--			<dependency>-->
+<!--				<groupId>de.codecentric</groupId>-->
+<!--				<artifactId>spring-boot-admin-starter-client</artifactId>-->
+<!--				<version>${spring.admin.client.version}</version>-->
+<!--			</dependency>-->
+
+<!--			<dependency>-->
+<!--				<groupId>de.codecentric</groupId>-->
+<!--				<artifactId>spring-boot-admin-dependencies</artifactId>-->
+<!--				<version>${spring.admin.server.version}</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<!-- <distributionManagement>
+		<repository>
+			<id>internal.releases</id>
+			<url>http://localhost:8081/repository/solar-internal-release/</url>
+		</repository>
+	</distributionManagement> -->
+
+	<build>
+		<finalName>${api.final.name}-${project.version}</finalName>
+		<plugins>
+
+			<!-- Pluging Git info -->
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<version>2.2.1</version>
+				<configuration>
+					<includeOnlyProperties>
+						<property>git.branch</property>
+						<property>git.build.time</property>
+						<property>git.build.user.email</property>
+						<property>git.build.version</property>
+						<property>git.commit.id</property>
+					</includeOnlyProperties>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<id>default-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/classes</outputDirectory>
+							<useDefaultDelimiters>false</useDefaultDelimiters>
+							<delimiters>
+								<delimiter>#</delimiter>
+							</delimiters>
+							<resources>
+								<resource>
+									<directory>src/main/resources/</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.xml</include>
+										<include>**/*.yml</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>src/main/resources/</directory>
+									<filtering>false</filtering>
+									<excludes>
+										<exclude>**/*.xml</exclude>
+										<exclude>**/*.yml</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+
+	<profiles>
+		
+		<!-- Profiles Change version POM -->
+		<!-- Profile Major change -->
+<!--		<profile>-->
+<!--			<id>bump-major</id>-->
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>bumpMajor</name>-->
+<!--				</property>-->
+<!--			</activation>-->
+<!--			<build>-->
+<!--				<plugins>-->
+<!--					<plugin>-->
+<!--						<groupId>org.codehaus.mojo</groupId>-->
+<!--						<artifactId>versions-maven-plugin</artifactId>-->
+<!--						<version>2.8.1</version>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<goals>-->
+<!--									<goal>set</goal>-->
+<!--								</goals>-->
+<!--								<phase>validate</phase>-->
+<!--								<configuration>-->
+<!--									&lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+<!--									<newVersion>${parsedVersion.nextMajorVersion}.0.0</newVersion>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+<!--				</plugins>-->
+<!--			</build>-->
+<!--		</profile>-->
+
+		<!-- Profile Minor change -->
+<!--		<profile>-->
+<!--			<id>bump-minor</id>-->
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>bumpMinor</name>-->
+<!--				</property>-->
+<!--			</activation>-->
+<!--			<build>-->
+<!--				<plugins>-->
+<!--					<plugin>-->
+<!--						<groupId>org.codehaus.mojo</groupId>-->
+<!--						<artifactId>versions-maven-plugin</artifactId>-->
+<!--						<version>2.8.1</version>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<goals>-->
+<!--									<goal>set</goal>-->
+<!--								</goals>-->
+<!--								<phase>validate</phase>-->
+<!--								<configuration>-->
+<!--									&lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+<!--									<newVersion>${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0</newVersion>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+<!--				</plugins>-->
+<!--			</build>-->
+<!--		</profile>-->
+
+		<!-- Profile Patch change -->
+<!--		<profile>-->
+<!--			<id>bump-patch</id>-->
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>bumpPatch</name>-->
+<!--				</property>-->
+<!--			</activation>-->
+<!--			<build>-->
+<!--				<plugins>-->
+<!--					<plugin>-->
+<!--						<groupId>org.codehaus.mojo</groupId>-->
+<!--						<artifactId>versions-maven-plugin</artifactId>-->
+<!--						<version>2.8.1</version>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<goals>-->
+<!--									<goal>set</goal>-->
+<!--								</goals>-->
+<!--								<phase>validate</phase>-->
+<!--								<configuration>-->
+<!--									&lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+<!--									<newVersion>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}</newVersion>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+<!--				</plugins>-->
+<!--			</build>-->
+<!--		</profile>-->
+
+	</profiles>
+
+</project>

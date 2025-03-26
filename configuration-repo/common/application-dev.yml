@@ -1,0 +1,37 @@
+#===============================================================================
+
+spring:
+  application:
+    name : ${application.name-key}-dev-service
+
+#===============================================================================
+
+# Daily rolling logs
+#logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd}.%i.log
+
+# Per hour rolling logs
+#logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd-HH}.%i.log
+
+# Per minute rolling logs
+#logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd-HH-mm}.%i.log
+
+# Per secs rolling logs
+# logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd-HH-mm-ss}.%i.log
+
+# logging.file.path: ${CONTAINER_LOG_PATH} : use env variable to describe specific path
+
+logging:
+#   config: ${spring.cloud.config.uri}/configuration-repo/default/develop/logback-spring-dev.xml
+  # file: 
+  #   name: ${logging.file.path}\\${application.name-key}-dev-elk.log
+  # logback:
+  #   rollingpolicy:
+  #     file-name-pattern: ${logging.file.path}\\archived\\${application.nameKey}-dev-elk-%d{yyyy-MM-dd}.%i.log
+  level:
+    root: INFO
+    org.springframework.web.servlet.DispatcherServlet: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    org.hibernate.type: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE # only in dev

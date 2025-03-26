@@ -1,0 +1,21 @@
+{
+    "configurations": [
+
+        {
+            "type": "java",
+            "name": "[DEV] MDM API",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "org.solar.system.mdm.api.MsMdmServerApplication",
+            "projectName": "mdm-api",
+            "args": "--spring.profiles.active=dev",
+            "envFile": "${workspaceFolder}/.env",
+            "env": {
+                "MDM_PG_DB_SERVICE": "localhost:5452",
+                "MDM_PG_DB_NAME": "solar-mdm-dev",
+                "MDM_PG_DB_USER": "d_mdm_user",
+                "MDM_PG_DB_PASSWORD": "d_mdm_user"
+            }
+        }
+    ]
+}

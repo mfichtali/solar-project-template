@@ -1,0 +1,25 @@
+# version: "3.8"
+services:
+
+
+  # Begin Postgres DEV section
+  postgres-audit-dev:
+    image: postgres:14.2-alpine
+    hostname: $AUDIT_PG_DB_SERVICE
+    container_name: postgres-audit-$SPRING_PROFILES_ACTIVE
+    profiles: ["dev"]
+    volumes:
+      - $LOCAL_VOLUME_POSTGRES\audit\$SPRING_PROFILES_ACTIVE:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$AUDIT_PG_DB_NAME
+      - POSTGRES_USER=$AUDIT_PG_DB_USER
+      - POSTGRES_PASSWORD=$AUDIT_PG_DB_PASSWORD
+    ports:
+      - $AUDIT_PG_DB_PORT:$POSTGRES_DEFAULT_PORT
+  # End Postgres DEV section
+
+
+networks:
+  default:
+      name: netix-red
+      external: true

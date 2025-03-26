@@ -1,0 +1,117 @@
+#===============================================================================
+
+server:
+  servlet:
+    context-path: /${application.name-key}
+
+#===============================================================================
+
+## Application Common properties
+application:
+
+  # Enable Annotation Historize action data
+  historize.perform.enabled: false
+
+  # Enable Kafka Produce message
+  kafka.producer.enabled: true
+
+  # Swagger Config
+  swagger:
+    title: Master Data Management API
+    description: MDM API Information
+    termsOfService: http://swagger.io/terms/
+    licenseName: Apache 2.0
+    licenseUrl: http://springdoc.org
+    activeVersion: 1.0 # swagger version manually changed
+
+    actuator:
+      group-label: mdm-actuator
+      paths-to-match: /actuator/**
+      #paths-to-exclude: /api/v1.0/**,/api/v1.1/**
+
+    admin:
+      group-label: mdm-admin
+      paths-to-match: /api/admin/**
+
+    mdm-param-version:
+      group-label: mdm-param-version
+      paths-to-match: /api/param-version/**
+      #paths-to-exclude: /api/admin/**
+      #paths-to-exclude: /api/v1.0/**,/api/v1.1/**
+
+    mdm-vehicle:
+      group-label: mdm-vehicle
+      paths-to-match: /api/vehicle/**
+      #paths-to-exclude: /api/admin/**
+      #paths-to-exclude: /api/v1.0/**,/api/v1.1/**
+
+  # Cache Config
+  cache-mdm:
+    cache-active: true
+    cache-data-names:
+      cacheModuleRef: "cMdmModule"
+      cacheVersionRef: "cMdmVersion"
+      cacheEndpointRef: "cMdmRoute"
+      cacheVehicleRef: "cMdmVehicle"
+    cache-data-initial-capacity: 10
+    cache-data-size-max: 500
+    cache-data-lifetime-minute: 1440
+
+#===============================================================================
+
+# The OpenAPI definitions are in JSON format by default. For yaml format, we can obtain the
+# definitions at : http://localhost:8080/api-docs.yaml
+# default url : http://localhost:8080/v3/api-docs/
+# swagger UI url : http://localhost:8080/swagger-ui.html
+springdoc:
+  #use-management-port: true
+  show-actuator: true
+#  paths-to-match: /actuator/**, /api/**
+#  paths-to-exclude: /api/v1.0/**, /api/v2.0/**    # /api/version/** : api version admin
+#  packages-to-scan: org.solar.system.auth.api.rest # package1, package2
+  api-docs: 
+    enabled: true # Disabling the /api-docs enpoint
+  swagger-ui:
+    enabled: true # Disabling the /swagger-api enpoint
+    defaultModelsExpandDepth: -1
+    operationsSorter: method
+    
+#===============================================================================
+#========================= > Spring config
+
+spring:
+
+  jpa:
+    open-in-view: true
+
+  kafka:
+    enabled: true # not used explicitly
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    no-concurrency: 3
+    session-timeout-ms: 30000
+    heartbeat-interval-ms: 20000
+    max-poll-records: 200
+    max-poll-interval-ms: 3000
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 10MB
+      max-request-size: 10MB
+      
+#===============================================================================
+
+# management:
+#   endpoints:
+#     enabled-by-default: false
+#     web:
+#       exposure:
+#         include: 'health,info,refresh'
+#   endpoint:
+#     info:
+#       enabled: true
+#     health:
+#       enabled: true
+#     refresh:
+#       enabled: true

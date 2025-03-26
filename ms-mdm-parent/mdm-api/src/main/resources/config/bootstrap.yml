@@ -1,0 +1,34 @@
+#===============================================================================
+
+application:
+  name-key: mdm
+  service-id: ${application.name-key}-service
+  path-key: api
+  version: v#project.version#
+  java.version: #java.build.version#
+  endpoint-api-key: ${application.path-key}
+
+  # Override Enable Annotation Historize action data
+  #historize.perform.enabled: false
+
+  # Override Enable Kafka Produce message
+  #kafka.producer.enabled: false
+
+  
+#===============================================================================
+
+spring:
+
+  #  neo4j:
+#    uri: bolt://localhost:7687
+#    username: neo4j
+#    password: devneo4jdb
+
+  banner:
+    location: classpath:/boot/banner.txt
+    
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVICE_NAME:localhost}:${CONFIG_PORT:9020}/${CONFIG_CONTEXT_PATH:cloud-config-server}
+      name: mdm-service
+      label: ${DEFAULT_BRANCH:develop} # which branch in git remote used to load config, use env variable foo

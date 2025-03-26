@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+<!--	<parent>-->
+<!--		<groupId>org.solar.system.bom</groupId>-->
+<!--		<artifactId>solar-refactoring-bom</artifactId>-->
+<!--		<version>2.6</version>-->
+<!--	</parent>-->
+
+	<parent>
+		<groupId>org.solar.system.bom</groupId>
+		<artifactId>bom-spring-boot-3x-21jv</artifactId>
+		<version>3.4</version>
+	</parent>
+
+	<groupId>org.solar.system.audit</groupId>
+	<artifactId>ms-audit-parent</artifactId>
+	<version>1.0.0</version>
+	<name>AUDIT Parent (AUP)</name>
+	<description>Audit Parent MS</description>
+	<packaging>pom</packaging>
+
+	<properties>
+		<api.final.name>pack-audit</api.final.name>
+		<skipTests>true</skipTests>
+	</properties>
+
+	<dependencies>
+
+		<!-- depend config common -->
+		<dependency>
+			<groupId>org.solar.system.common</groupId>
+			<artifactId>central-common</artifactId>
+		</dependency>
+		
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- mapstruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
+
+		<!-- mapstruct-processor -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+		</dependency>
+		
+		<!-- configuration-processor -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- logstash-logback-encoder -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
+
+		<!-- spring-boot-starter-logging -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<dependencyManagement>
+
+		<dependencies>
+
+			<dependency>
+				<groupId>org.solar.system.audit</groupId>
+				<artifactId>audit-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.audit</groupId>
+				<artifactId>audit-service-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.audit</groupId>
+				<artifactId>audit-service-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.audit</groupId>
+				<artifactId>audit-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.audit</groupId>
+				<artifactId>audit-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+	
+	<modules>
+		<module>audit-common</module>
+		<module>audit-model</module>
+		<module>audit-api</module>
+		<module>audit-service-api</module>
+		<module>audit-service-impl</module>
+	</modules>
+	
+</project>

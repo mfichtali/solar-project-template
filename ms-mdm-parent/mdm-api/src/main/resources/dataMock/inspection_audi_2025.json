@@ -1,0 +1,16 @@
+{
+	"documentType": "INSPECTION_CERTIFICATE",
+	"objectIdentifier": "ffbba00d-a090-477f-9c75-897ba6dc44e8",
+	"objectReference": "wwGC228BS",
+	"noInspection": "2025AUDI01",
+	"vehicleRegistrationNumber": "wwGC228BS",
+	"inspectionDate": "2025-03-06",
+	"nextInspectionDate": "2027-03-06",
+	"inspectionMileage": 15236,
+	"inspectionResult": "PASSED",
+	"inspectionCenter": "CasaAutoCenter",
+	"inspectionAddress": null,
+	"inspectionPhone": null,
+	"inspectionComment": null,
+	"inspectionCost": 450
+}

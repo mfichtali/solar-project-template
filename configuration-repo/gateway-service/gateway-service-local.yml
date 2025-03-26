@@ -1,0 +1,27 @@
+#===============================================================================
+
+application:
+  b2b:
+    feign:
+
+      auth:
+        enabled: true
+        url: http://localhost:8061
+        api-version-name: Api-version
+        api-version-value: 1.0
+        context-path: /auth
+        service-url : ${application.b2b.feign.auth.url}${application.b2b.feign.auth.context-path}
+
+      mdm:
+        enabled: true
+        url: http://localhost:8071
+        context-path: /mdm
+        service-url: ${application.b2b.feign.mdm.url}${application.b2b.feign.mdm.context-path}
+
+      rental:
+        enabled: true
+        url: http://localhost:8091
+        context-path: /rental
+        service-url: ${application.b2b.feign.rental.url}${application.b2b.feign.rental.context-path}
+
+#===============================================================================

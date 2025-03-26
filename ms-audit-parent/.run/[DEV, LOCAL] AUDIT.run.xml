@@ -1,0 +1,24 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[DEV, LOCAL] AUDIT" type="Application" factoryName="Application">
+    <envs>
+      <env name="CONTAINER_LOG_PATH" value="C:\mfichtali\projects\solar-volumes\loggers" />
+      <env name="FLYWAY_LOCATIONS" value="filesystem:$PROJECT_DIR$/script/dev-pg" />
+      <env name="AUDIT_PG_DB_NAME" value="solar-audit-dev" />
+      <env name="AUDIT_PG_DB_PASSWORD" value="d_audit_user" />
+      <env name="AUDIT_PG_DB_SERVICE" value="localhost:5462" />
+      <env name="AUDIT_PG_DB_USER" value="d_audit_user" />
+      <env name="spring.profiles.active" value="dev" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="org.solar.system.audit.api.MsAuditServerApplication" />
+    <module name="audit-api" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="org.solar.system.audit.api.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

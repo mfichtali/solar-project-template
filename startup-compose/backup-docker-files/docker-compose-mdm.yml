@@ -1,0 +1,91 @@
+# version: "3.8"
+services:
+
+
+  # Begin Postgres DEV section
+  postgres-mdm-dev:
+    image: postgres:$PG_IMAGE_VERSION
+    hostname: $MDM_PG_DB_SERVICE
+    container_name: postgres-mdm-$SPRING_PROFILES_ACTIVE
+    profiles: ["dev"]
+    volumes:
+      - $LOCAL_VOLUME_POSTGRES\mdm\$SPRING_PROFILES_ACTIVE:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$MDM_PG_DB_NAME
+      - POSTGRES_USER=$MDM_PG_DB_USER
+      - POSTGRES_PASSWORD=$MDM_PG_DB_PASSWORD
+    ports:
+      - $MDM_PG_DB_PORT:$POSTGRES_DEFAULT_PORT
+  # End Postgres DEV section
+
+
+  # Begin Postgres RECETTE section 
+  postgres-mdm-rec:
+    image: postgres:$PG_IMAGE_VERSION
+    hostname: $MDM_PG_DB_SERVICE
+    container_name: postgres-mdm-$SPRING_PROFILES_ACTIVE
+    profiles: ["rec"]
+    volumes:
+      - $LOCAL_VOLUME_POSTGRES\mdm\$SPRING_PROFILES_ACTIVE:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$MDM_PG_DB_NAME
+      - POSTGRES_USER=$MDM_PG_DB_USER
+      - POSTGRES_PASSWORD=$MDM_PG_DB_PASSWORD
+    ports:
+      - $MDM_PG_DB_PORT:$POSTGRES_DEFAULT_PORT
+  # End Postgres RECETTE section 
+
+  # Begin DEV NEO4J section
+  # neo4j-mdm-dev:
+  #   image: neo4j:latest
+  #   hostname: $MDM_NEO4J_DB_SERVICE
+  #   restart: unless-stopped
+  #   profiles: ["dev"]
+  #   container_name: neo4j-mdm-$SPRING_PROFILES_ACTIVE
+  #   ports:
+  #     - $MDM_NEO4J_DB_PORT:$NEO4J_DEFAULT_PORT
+  #     - 7687:7687
+  #   volumes:
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/conf:/conf
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/data:/data
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/import:/import
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/logs:/logs
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/plugins:/plugins
+  #   environment: 
+  #     - NEO4J_AUTH=$MDM_NEO4J_DB_AUTH
+  #     # - NEO4J_dbms.default.database=solar-mdm-$SPRING_PROFILES_ACTIVE
+  #     # Raise memory limits
+  #     - NEO4J_dbms.memory.pagecache.size=1G
+  #     - NEO4J_dbms.memory.heap.initial_size=1G
+  #     - NEO4J_dbms.memory.heap.max_size=1G
+  # End DEV NEO4J section
+
+
+  # Begin mdm-service [DEV] section 
+  mdm-service-dev:
+    image: mdm-service:$MDM_VERSION
+    container_name: $MDM_CONTAINER_NAME
+    profiles: ["dev"]
+    build:
+      context: ../../ms-mdm-parent
+      args:
+        workdir_env: $ROOT_CONTEXT_APP
+        mdm_version: $MDM_VERSION
+        profile_env: $SPRING_PROFILES_ACTIVE 
+    env_file: 
+      - ./environment/$SPRING_PROFILES_ACTIVE.env
+    volumes:
+      - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=$KAFKA_BOOTSTRAP_SERVICE
+    ports:
+      - $MDM_EXPOSURE_PORT:$MDM_SOURCE_PORT
+    depends_on:
+      - postgres-mdm-dev
+  # End mdm-service [DEV] section
+
+
+networks:
+  default:
+      name: netix-red
+      external: true

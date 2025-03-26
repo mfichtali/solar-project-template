@@ -1,0 +1,38 @@
+#===============================================================================
+
+server:
+  port: ${GTW_SOURCE_PORT:8081}
+
+#===============================================================================
+#=================> Logging config
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
+    reactor.netty.http.client: DEBUG
+    # org.springframework.web.client.RestTemplate: INFO
+
+#===============================================================================
+
+## Application Common properties
+application:
+  b2b:
+    feign:
+
+      auth:
+        enabled: true
+        api-version-name: Api-version
+        api-version-value: 1.0
+        service-lb : lb://auth-dev-service
+        service-name: ${application.b2b.feign.auth.service-lb}
+
+      mdm:
+        enabled: true
+        service-lb : lb://mdm-dev-service
+        service-name: ${application.b2b.feign.mdm.service-lb}
+
+      rental:
+        enabled: true
+        service-lb : lb://rental-dev-service
+        service-name: ${application.b2b.feign.rental.service-lb}

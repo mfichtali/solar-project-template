@@ -1,0 +1,69 @@
+services:
+
+
+  # Begin registry-service section 
+  registry-service:
+    image: registry-service:$REGISTRY_VERSION
+    container_name: $REGISTRY_CONTAINER_NAME
+    build:
+      context: ../../../ms-service-registry-parent
+      args:
+        service_name: $REGISTRY_SERVICE_NAME
+        workdir_env: $ROOT_CONTEXT_APP
+        registry_version: $REGISTRY_VERSION
+    env_file:
+      - ../../environment/.env.shared
+      - ../../environment/.env.ecosystem
+    volumes:
+       - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    ports:
+      - $REGISTRY_PORT:$REGISTRY_CONTAINER_PORT
+  # End registry-service section
+
+
+  # Begin config-service section 
+  config-server:
+    image: config-server:$CONFIG_VERSION
+    container_name: $CONFIG_CONTAINER_NAME
+    build:
+      context: ../../../ms-config-server-parent
+      args:
+        service_name: $CONFIG_SERVICE_NAME
+        workdir_env: $ROOT_CONTEXT_APP
+        config_version: $CONFIG_VERSION
+    env_file:
+      - ../../environment/.env.shared
+      - ../../environment/.env.ecosystem
+    volumes:
+       - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    ports:
+      - $CONFIG_PORT:$CONFIG_CONTAINER_PORT
+    depends_on:
+      - $REGISTRY_SERVICE_NAME
+  # End config-service section  
+
+
+  # Begin spring-admin-server section 
+  admin-server:
+    image: spring-admin-server:$SAS_VERSION
+    container_name: $SAS_CONTAINER_NAME
+    build:
+      context: ../../../solar-spring-admin-server
+      args:
+        service_name: $SAS_SERVICE_NAME
+        workdir_env: $ROOT_CONTEXT_APP
+        sas_version: $SAS_VERSION
+    env_file:
+      - ../../environment/.env.shared
+      - ../../environment/.env.ecosystem
+    volumes:
+      - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    ports:
+      - $SAS_PORT:$SAS_CONTAINER_PORT
+  # End spring-admin-server section
+
+
+networks:
+  default:
+      name: netix-red
+      external: true

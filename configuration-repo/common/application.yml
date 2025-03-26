@@ -1,0 +1,88 @@
+#===============================================================================
+
+#daily rolling logs
+#logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd}.%i.log
+#per hour rolling logs
+#logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd-HH}.%i.log
+#per minute rolling logs
+#logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd-HH-mm}.%i.log
+#per secs rolling logs
+# logging.pattern.rolling-file-name=myinfo-%d{yyyy-MM-dd-HH-mm-ss}.%i.log
+# logging.file.path: ${CONTAINER_LOG_PATH} : use env variable to describe specific path
+
+logging.config: classpath:logback/logback-spring.xml
+
+# logging:
+#   pattern:
+#       console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(%-5level) %clr([${spring.profiles.active}]){magenta}[${spring.application.name},%X{traceId:-},%X{spanId:-}] ${PID:- } -- [%thread] %c{2}:%L - %msg%n"
+#       file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${spring.profiles.active}][${spring.application.name},%X{traceId:-},%X{spanId:-}] ${PID:- } -- [%thread] %c{2}:%L - %msg%n"
+#   file: 
+#     path: ${CONTAINER_LOG_PATH:C:\mfichtali\projects\solar-volumes\logger} # use env variable
+#   logback:
+#     rollingpolicy:
+#       max-file-size: 5MB
+#       total-size-cap: 30MB 
+#      clean-history-on-start: true
+#      max-history: 30 #  maximum number of days that the archive log files the default is 7 days.
+   
+#===============================================================================
+
+management:
+  endpoints.web.exposure.include: '*'
+  # endpoint.health.show-details: always
+
+#===============================================================================
+
+spring:
+
+  boot.admin:
+    client:
+      enabled: true
+      url: ${ADMIN_SERVER:http://localhost:9030}/${SAS_CONTEXT_PATH:sas-service}
+      auto-registration: true
+
+  zipkin:
+    enabled: false
+    service.name: ${spring.application.name}
+    baseUrl: ${ZIPKIN_SERVICE:localhost:9040} # url zipkin
+
+  # Discovery & Gateway
+  cloud:
+    discovery:
+      enabled: true
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+#===============================================================================
+
+springdoc:
+  #use-management-port: true
+  show-actuator: true
+#  paths-to-match: /actuator/**, /api/**
+#  paths-to-exclude: /api/v1.0/**, /api/v2.0/**    # /api/version/** : api version admin
+#  packages-to-scan: org.solar.system.auth.api.rest # package1, package2
+  api-docs: 
+    # enabled: true # Disabling the /api-docs enpoint
+    path: /api-docs  # url like http://localhost:8080/api-docs/
+  swagger-ui:
+    # enabled: true # Disabling the /swagger-api enpoint
+    path: /swagger-api
+
+#===============================================================================
+  
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+    #hostname : localhost
+    hostname : ${spring.application.name}
+    prefer-ip-address: true
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${REGISTRY_SERVICE_NAME:localhost}:${REGISTRY_PORT:9010}/${REGISTRY_CONTEXT_PATH:registry-service}/eureka

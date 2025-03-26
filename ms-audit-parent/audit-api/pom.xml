@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.solar.system.audit</groupId>
+		<artifactId>ms-audit-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>audit-api</artifactId>
+	<name>Audit API</name>
+	<description>Audit API</description>
+
+	<dependencies>
+
+		<!-- Spring web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-config-client</artifactId>-->
+<!--		</dependency>-->
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+
+		<!-- depend service-impl -->
+		<dependency>
+			<groupId>org.solar.system.audit</groupId>
+			<artifactId>audit-service-impl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	
+</project>

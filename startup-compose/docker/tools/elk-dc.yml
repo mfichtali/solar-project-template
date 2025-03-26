@@ -1,0 +1,68 @@
+services:
+
+
+  # Begin ELK  section
+  # Elastic conf
+  elasticsearch:
+    image: elasticsearch:$ELK_VERSION
+    container_name: elasticsearch
+    # restart: always
+    volumes:
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - elastic_data:/usr/share/elasticsearch/data
+    ports:
+    - 9200:9200
+    - 9300:9300
+    environment:
+      ES_JAVA_OPTS: $ES_JAVA_OPTS
+    healthcheck:
+      test: "curl -f http://localhost:9200 || exit 1"
+
+
+  # Logstash conf 
+  logstash:
+    image: logstash:$ELK_VERSION
+    container_name: logstash
+    # restart: always
+    volumes:
+      - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - $APP_LOG_VOLUME:/usr/share/logstash/logs
+    command: logstash -f /usr/share/logstash/pipeline/logstash.conf
+    ports:
+      # - 5044:5044
+      - 9600:9600
+    environment:
+      LS_JAVA_OPTS: $LS_JAVA_OPTS
+    depends_on:
+      - elasticsearch
+    healthcheck:
+      test: "curl -f http://localhost:9600 || exit 1"
+
+
+  # Kibana conf 
+  Kibana:
+    image: kibana:$ELK_VERSION
+    container_name: kibana-ui
+    # restart: always
+    volumes:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    healthcheck:
+      test: "curl -f http://localhost:5601 || exit 1"
+
+    # End ELK section
+
+
+volumes:
+  elastic_data:
+    external: true
+
+
+networks:
+  default:
+      name: netix-red
+      external: true

@@ -1,0 +1,22 @@
+scrape_configs:
+
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: []
+
+  - job_name: 'Auth Service Provider Prometheus'
+    metrics_path: '/auth/actuator/prometheus'
+    scrape_interval: 2s
+    static_configs:
+      - targets: ['auth-service-dev:8061']
+        labels:
+          application: '[DEV] Auth Service'
+
+  - job_name: 'MDM Service Prometheus'
+    metrics_path: '/mdm/actuator/prometheus'
+    scrape_interval: 2s
+    static_configs:
+      - targets: ['mdm-service-dev:8071']
+        labels:
+          application: '[DEV] MDM Service'

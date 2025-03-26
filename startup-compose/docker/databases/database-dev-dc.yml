@@ -1,0 +1,139 @@
+services:
+
+
+  # Begin Postgres DEV section
+  db-mdm-dev:
+    image: postgres:$PG_IMAGE_VERSION
+    hostname: $MDM_PG_DB_SERVICE
+    container_name: $MDM_DB_CONTAINER_NAME
+    profiles:
+      - dev
+    volumes:
+      - $LOCAL_VOLUME_POSTGRES\mdm\$SPRING_PROFILES_ACTIVE:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$MDM_PG_DB_NAME
+      - POSTGRES_USER=$MDM_PG_DB_USER
+      - POSTGRES_PASSWORD=$MDM_PG_DB_PASSWORD
+    ports:
+      - $MDM_PG_DB_PORT:$POSTGRES_DEFAULT_PORT
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${MDM_PG_DB_USER}" ]
+      interval: 10s
+      timeout: 20s
+      retries: 3
+  # End Postgres DEV section
+
+
+  # Begin Postgres DEV section 
+  db-auth-dev:
+    image: postgres:$PG_IMAGE_VERSION
+    hostname: $AUTH_PG_DB_SERVICE
+    container_name: $AUTH_DB_CONTAINER_NAME
+    profiles:
+      - dev
+    volumes:
+      - $LOCAL_VOLUME_POSTGRES\auth\$SPRING_PROFILES_ACTIVE:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$AUTH_PG_DB_NAME
+      - POSTGRES_PASSWORD=$AUTH_PG_DB_USER
+      - POSTGRES_USER=$AUTH_PG_DB_PASSWORD
+    ports:
+      - $AUTH_PG_DB_PORT:$POSTGRES_DEFAULT_PORT
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${AUTH_PG_DB_USER}" ]
+      interval: 10s
+      timeout: 20s
+      retries: 3
+  # End Postgres DEV section 
+
+
+  # Begin Postgres DEV section
+  db-audit-dev:
+    image: postgres:$PG_IMAGE_VERSION
+    hostname: $AUDIT_PG_DB_SERVICE
+    container_name: db-audit-$SPRING_PROFILES_ACTIVE
+    profiles:
+      - dev
+    volumes:
+      - $LOCAL_VOLUME_POSTGRES\audit\$SPRING_PROFILES_ACTIVE:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$AUDIT_PG_DB_NAME
+      - POSTGRES_USER=$AUDIT_PG_DB_USER
+      - POSTGRES_PASSWORD=$AUDIT_PG_DB_PASSWORD
+    ports:
+      - $AUDIT_PG_DB_PORT:$POSTGRES_DEFAULT_PORT
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${AUDIT_PG_DB_USER}" ]
+      interval: 10s
+      timeout: 20s
+      retries: 3
+  # End Postgres DEV section
+
+
+  # Begin Postgres DEV section
+  db-rental-dev:
+    image: postgres:$PG_IMAGE_VERSION
+    hostname: $RENTAL_PG_DB_SERVICE
+    container_name: $RENTAL_DB_CONTAINER_NAME
+    profiles:
+      - dev
+    volumes:
+      - $LOCAL_VOLUME_POSTGRES\rental\$SPRING_PROFILES_ACTIVE:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$RENTAL_PG_DB_NAME
+      - POSTGRES_USER=$RENTAL_PG_DB_USER
+      - POSTGRES_PASSWORD=$RENTAL_PG_DB_PASSWORD
+    ports:
+      - $RENTAL_PG_DB_PORT:$POSTGRES_DEFAULT_PORT
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${RENTAL_PG_DB_USER}" ]
+      interval: 10s
+      timeout: 20s
+      retries: 3
+  # End Postgres DEV section
+
+
+networks:
+  default:
+      name: netix-red
+      external: true
+
+
+  # Postgres conf 
+  # postgres_db_fake:
+  #   image: postgres:$PG_IMAGE_VERSION
+  #   container_name: postgres_db_fake
+  #   volumes:
+  #     - $LOCAL_VOLUME_POSTGRES\fake:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=$POSTGRES_DB_FAKE
+  #     - POSTGRES_USER=$POSTGRES_USER_FAKE
+  #     - POSTGRES_PASSWORD=$POSTGRES_PASSWORD_FAKE
+  #   ports:
+  #     - $FAKE_POSTGRES_PORT:$POSTGRES_DEFAULT_PORT
+
+
+  # Begin DEV NEO4J section
+  # neo4j-mdm-dev:
+  #   image: neo4j:latest
+  #   hostname: $MDM_NEO4J_DB_SERVICE
+  #   restart: unless-stopped
+  #   profiles: ["dev"]
+  #   container_name: neo4j-mdm-$SPRING_PROFILES_ACTIVE
+  #   ports:
+  #     - $MDM_NEO4J_DB_PORT:$NEO4J_DEFAULT_PORT
+  #     - 7687:7687
+  #   volumes:
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/conf:/conf
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/data:/data
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/import:/import
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/logs:/logs
+  #     - $LOCAL_VOLUME_NEO4J/mdm/$SPRING_PROFILES_ACTIVE/plugins:/plugins
+  #   environment:
+  #     - NEO4J_AUTH=$MDM_NEO4J_DB_AUTH
+  #     # - NEO4J_dbms.default.database=solar-mdm-$SPRING_PROFILES_ACTIVE
+  #     # Raise memory limits
+  #     - NEO4J_dbms.memory.pagecache.size=1G
+  #     - NEO4J_dbms.memory.heap.initial_size=1G
+  #     - NEO4J_dbms.memory.heap.max_size=1G
+  # End DEV NEO4J section

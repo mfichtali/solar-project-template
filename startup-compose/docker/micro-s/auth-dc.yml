@@ -1,0 +1,34 @@
+services:
+
+
+  # Begin Auth service [DEV] section 
+  auth-service-dev:
+    image: auth-service:$AUTH_VERSION
+    container_name: $AUTH_CONTAINER_NAME
+    profiles:
+      - dev
+    build:
+      context: ../../../ms-auth-parent
+      args:
+        workdir_env: $ROOT_CONTEXT_APP
+        profile_env: $SPRING_PROFILES_ACTIVE 
+        auth_version: $AUTH_VERSION
+    env_file:
+      - ../../environment/.env.shared
+      - ../../environment/.env.ecosystem
+      - ../../environment/$SPRING_PROFILES_ACTIVE.env
+    volumes:
+      - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=$KAFKA_BOOTSTRAP_SERVICE
+    ports:
+      - $AUTH_PORT:$AUTH_CONTAINER_PORT
+#    depends_on:
+#      - postgres-auth-$SPRING_PROFILES_ACTIVE
+  # End Auth service [DEV] section
+
+
+networks:
+  default:
+      name: netix-red
+      external: true

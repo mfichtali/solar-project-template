@@ -1,0 +1,91 @@
+#===============================================================================
+
+server:
+  port: ${AUDIT_PORT_SOURCE:8051}
+  # error.include-message: always
+
+#===============================================================================
+#=================> Application Common properties
+
+application:
+  b2b:
+    feign:
+      mdm:
+        service-id: MDM-DEV-SERVICE
+        context-path: mdm
+        service-name: ${application.b2b.feign.mdm.service-id}/${application.b2b.feign.mdm.context-path}
+
+#===============================================================================
+#=================> Logging config
+
+# Logging en mode debug pour le package feign
+# org.solar.system.auth.api.feign
+
+logging:
+  level:
+    org:
+      hibernate:
+        engine:
+          jdbc:
+            connections: DEBUG
+    com:
+      zaxxer:
+        hikari: INFO
+    org.solar.system.auth.api.feign: INFO
+    # org.springframework.web: INFO
+    # org.springframework.web.servlet.DispatcherServlet: INFO
+    # org.springframework.web.client.RestTemplate: INFO
+    # org.hibernate: INFO
+    # org.hibernate.type: INFO
+    # org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+#===============================================================================
+#=================> rsa config : use RSA 512
+
+rsa:
+  key:
+    publicKeyFile: ${PUB_KEY_PATH:C:\mfichtali\projects\solar-depot\ms-auth-parent\launch\${spring.profiles.active}-keys\rsa_pub_key.pub}
+    privateKeyFile: ${PRIV_KEY_PATH:C:\mfichtali\projects\solar-depot\ms-auth-parent\launch\${spring.profiles.active}-keys\rsa_pub_key}
+    secret: ${RSA_SECRET:5381FDF3A97C8FD49AECE6B7B3D9}
+    
+#===============================================================================
+#================ > Spring config
+
+spring:
+  output.ansi.enabled: ALWAYS
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://${AUDIT_PG_DB_SERVICE:localhost:5462}/${AUDIT_PG_DB_NAME:solar-audit-dev}
+    username: ${AUDIT_PG_DB_USER:d_audit_user}
+    password: ${AUDIT_PG_DB_PASSWORD:d_audit_user} # local password : javax123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-test-query: SELECT 1
+      initialization-fail-timeout: 0
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 1800000
+      maximumPoolSize: 20
+      poolName: HIKARI-AUDIT-DEV
+      minimumIdle: 2
+      leak-detection-threshold: 60000
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      jdbc.lob.non_contextual_creation: true
+    properties:
+      org.hibernate.envers.audit_table_suffix: _AUDIT_DEV_LOG
+      hibernate.format_sql: true # only in dev
+      hibernate.id.new_generator_mappings: false
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.hbm2ddl.auto: none
+  flyway:
+    enabled: true # change value for taking new files sql
+    locations: ${FLYWAY_LOCATIONS:filesystem:C:/mfichtali/projects/solar-depot/ms-audit-parent/script/dev-pg} # separated by comma
+    # locations: ${FLYWAY_LOCATIONS:filesystem:D:/mfichtali/depots/ms-auth-parent/script/dev-pg} # separated by comma
+    lockRetryCount: 10

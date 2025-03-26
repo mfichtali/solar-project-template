@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--	<parent>-->
+	<!--		<groupId>org.solar.system.bom</groupId>-->
+	<!--		<artifactId>solar-refactoring-bom</artifactId>-->
+	<!--		<version>2.6</version>-->
+	<!--	</parent>-->
+
+	<parent>
+		<groupId>org.solar.system.bom</groupId>
+		<artifactId>bom-spring-boot-3x-21jv</artifactId>
+		<version>3.4</version>
+	</parent>
+
+	<groupId>org.solar.system</groupId>
+	<artifactId>solar-spring-admin-server</artifactId>
+	<version>1.0.0</version>
+	<name>Solar Spring Admin Server</name>
+
+	<properties>
+		<api.final.name>admin-server</api.final.name>
+	</properties>
+
+	<dependencies>
+
+		<!-- central-common -->
+		<dependency>
+			<groupId>org.solar.system.common</groupId>
+			<artifactId>central-common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server-ui</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- Spring boot logging -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
+		<!-- logstash-logback-encoder -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
+		
+	</dependencies>
+	
+</project>

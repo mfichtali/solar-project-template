@@ -1,0 +1,146 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+<!--	<parent>-->
+<!--		<groupId>org.solar.system.bom</groupId>-->
+<!--		<artifactId>solar-refactoring-bom</artifactId>-->
+<!--		<version>2.6</version>-->
+<!--	</parent>-->
+
+	<parent>
+		<groupId>org.solar.system.bom</groupId>
+		<artifactId>bom-spring-boot-3x-21jv</artifactId>
+		<version>3.4</version>
+	</parent>
+
+	<groupId>org.solar.system.mdm</groupId>
+	<artifactId>ms-mdm-parent</artifactId>
+	<name>MDM Parent (MDP)</name>
+	<version>1.0.0</version>
+	<description>MDM Parent MS</description>
+	<packaging>pom</packaging>
+
+	<properties>
+		<api.final.name>pack-mdm</api.final.name>
+	</properties>
+
+	<dependencies>
+
+		<!-- depend central common -->
+		<dependency>
+			<groupId>org.solar.system.common</groupId>
+			<artifactId>central-common</artifactId>
+		</dependency>
+		
+		<!-- PROMETHEUS -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- mapstruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
+
+		<!-- mapstruct-processor -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+		</dependency>
+
+		<!-- configuration-processor -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- logstash-logback-encoder -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
+
+		<!-- spring-boot-starter-logging -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<dependencyManagement>
+
+		<dependencies>
+
+			<dependency>
+				<groupId>org.solar.system.mdm</groupId>
+				<artifactId>mdm-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.mdm</groupId>
+				<artifactId>mdm-service-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.mdm</groupId>
+				<artifactId>mdm-service-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.mdm</groupId>
+				<artifactId>mdm-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solar.system.mdm</groupId>
+				<artifactId>mdm-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>all-in</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>mdm-api</module>
+				<module>mdm-model</module>
+				<module>mdm-service-api</module>
+				<module>mdm-service-impl</module>
+				<module>mdm-common</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>no-test</id>
+			<modules>
+				<module>mdm-api</module>
+				<module>mdm-model</module>
+				<module>mdm-service-api</module>
+				<module>mdm-service-impl</module>
+				<module>mdm-common</module>
+			</modules>
+		</profile>
+
+	</profiles>
+
+</project>

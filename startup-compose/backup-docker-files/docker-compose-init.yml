@@ -1,0 +1,69 @@
+# version: "3.8"
+services:
+
+
+  # Begin registry-service section 
+  registry-service:
+    image: registry-service:$REGISTRY_VERSION
+    container_name: $REGISTRY_CONTAINER_NAME
+    build:
+      context: ../../ms-service-registry-parent
+      args:
+        workdir_env: $ROOT_CONTEXT_APP
+        registry_version: $REGISTRY_VERSION
+    env_file:
+      - ../environment/.env
+    volumes:
+       - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    ports:
+      - $REGISTRY_EXPOSURE_PORT:$REGISTRY_SOURCE_PORT
+  # End registry-service section
+
+
+  # Begin config-service section 
+  config-server:
+    image: config-server:$CONFIG_VERSION
+    container_name: $CONFIG_CONTAINER_NAME
+    build: 
+      context: ../../ms-config-server-parent
+      args:
+        workdir_env: $ROOT_CONTEXT_APP
+        config_version: $CONFIG_VERSION
+    env_file:
+      - ../environment/.env
+    volumes:
+       - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    ports:
+      - $CONFIG_EXPOSURE_PORT:$CONFIG_SOURCE_PORT
+    depends_on:
+      - $REGISTRY_SERVICE_NAME
+  # End config-service section  
+
+
+  # Begin spring-admin-server section 
+  admin-server:
+    image: spring-admin-server:$SAS_VERSION
+    container_name: $SAS_CONTAINER_NAME
+    build:
+      context: ../../solar-spring-admin-server
+      args:
+        workdir_env: $ROOT_CONTEXT_APP
+        sas_version: $SAS_VERSION
+    env_file:
+      - ../environment/.env
+    volumes:
+      - $APP_LOG_VOLUME:$CONTAINER_LOG_PATH
+    ports:
+      - $SAS_EXPOSURE_PORT:$SAS_SOURCE_PORT
+  # End spring-admin-server section
+
+
+networks:
+  default:
+      name: netix-red
+      external: true
+
+
+#volumes:
+#  logs-volume:
+#    external: true
