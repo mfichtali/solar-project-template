@@ -1,0 +1,24 @@
+#===============================================================================
+
+application:
+  name-key: rental
+  service-id: ${application.name-key}-service
+  path-key: api
+  version: v#project.version#
+  java.version: #java.build.version#
+  endpoint-api-key: ${application.path-key}
+
+#===============================================================================
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  banner:
+    location: classpath:/boot/banner.txt
+    
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVICE_NAME:localhost}:${CONFIG_PORT:9020}/${CONFIG_CONTEXT_PATH:cloud-config-server}
+      name: rental-service
+      label: ${DEFAULT_BRANCH:develop} # which branch in git remote used to load config, use env variable foo
